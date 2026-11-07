@@ -236,15 +236,16 @@ def main() -> None:
         try:
             sniff(iface=args.iface, filter=bpf or "", prn=analyzer.handle,
                   count=args.count, store=False)
-        except PermissionError:
-            print(f"{RED}[!] Permission denied. Live capture needs admin rights:"
-                  f"\n    Linux/macOS: sudo python3 packetscope.py"
-                  f"\n    Windows    : run terminal as Administrator (Npcap installed)"
-                  f"\n    No admin?   : analyze a file instead -> "
-                  f"python3 packetscope.py --read sample.pcap{RESET}")
-            sys.exit(1)
-        except OSError as exc:
-            print(f"{RED}[!] Capture failed: {exc}{RESET}")
+        except (PermissionError, OSError, ValueError, Scapy_Exception) as exc:
+            print(f"{RED}[!] Live capture could not start on this device."
+                  f"\n    Reason: {exc.__class__.__name__}: {exc}"
+                  f"\n"
+                  f"\n    Live capture needs a computer + admin rights:"
+                  f"\n    - Linux/macOS : sudo python3 packetscope.py"
+                  f"\n    - Windows     : terminal as Administrator (Npcap installed)"
+                  f"\n    - Android/Termux: live capture is NOT supported by Scapy"
+                  f"\n      (and phones block it without root). Use file mode here:"
+                  f"\n      python3 packetscope.py --read sample.pcap{RESET}")
             sys.exit(1)
         source = f"live:{args.iface or 'default'}"
 

@@ -24,6 +24,9 @@ Think of it as a mini, friendly **Wireshark in the terminal**.
 - Scapy: `pip install -r requirements.txt`
 - For **live capture**: admin rights (Linux/macOS: `sudo`; Windows:
   Administrator terminal + Npcap). Reading a `.pcap` file needs nothing.
+- **Android/Termux:** Scapy does not support live capture on Android (and
+  phones block it without root) — use `--read` mode there; live capture
+  works on a Linux/Windows/macOS computer.
 
 ## Quick start — no admin needed
 
