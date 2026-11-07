@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+.venv/
+report*.txt
+report*.json
+capture*.pcap
